@@ -1,0 +1,31 @@
+insert into COMPANY 
+values ('cid_1', 'Company_1 name');
+insert into MACHINE
+values ('urn:epc:id:sgtin:1111111.111111.1111','Machine_1 ','DER1','cid_1');
+
+
+insert INTAKE 
+values ('urn:epc:id:sgtin:9501234.107346.8888','Intake_1 name','3','4',null);
+
+
+insert INTAKE 
+values ('urn:epc:id:sgtin:9501234.107346.9999','Intake_2 name','7','9',null);
+
+insert into TOOL
+values ('urn:epc:id:sgtin:9501234.000000.0000','Tool_1 name','30','40',null,null);
+
+insert into TOOL
+values ('urn:epc:id:sgtin:9501234.000000.1111','Tool_1 name','30','40',null,null);
+
+delete from tool;
+delete from intake;
+delete  from machine;
+delete from company;
+
+
+ids:
+Machines: 1- urn:epc:id:sgtin:1111111.111111.1111
+Intake: 1-urn:epc:id:sgtin:9501234.107346.8888     urn:epc:id:sgtin:9501234.107346.9999
+Tool: urn:epc:id:sgtin:9501234.000000.0000        urn:epc:id:sgtin:9501234.000000.1111
+
+M1-In1   M1-in2   In2-t1   in1-t2
