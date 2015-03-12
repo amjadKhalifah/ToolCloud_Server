@@ -61,24 +61,31 @@ public class MachineService {
 		Machine machine = machineDao.find(oid);	
 		if (machine != null)
 		{
-			return createObjectXml("machine", machine.getName(), machine.getMachineId()); 
+			return createObjectXml("machine", machine.getName(), machine.getMachineId(),false,false); 
 		} 
 		
 		Intake intake = intakeDao.find(oid);	
 		if (intake != null)
 		{
-			return createObjectXml("intake", intake.getName(), intake.getIntakeId()); 
+			Tool tool = toolDao.findByIntakeId(intake.getIntakeId());
+			boolean aggregatedAsParent = (tool==null)? false:true;
+			boolean aggregatedAsChild = (intake.getMachineId()==null)? false:true;
+			return createObjectXml("intake", intake.getName(), intake.getIntakeId(),aggregatedAsChild ,aggregatedAsParent); 
 		}
 		
 		Tool tool = toolDao.find(oid);	
 		if (tool != null)
 		{
-			return createObjectXml("tool", tool.getName(), tool.getToolId()); 
+			boolean aggregatedAsChild=false;
+			if (tool.getMachineId()!=null || tool.getIntakeId()!=null){
+				aggregatedAsChild = true;
+			}
+			return createObjectXml("tool", tool.getName(), tool.getToolId(),aggregatedAsChild,false); 
 		}
 		
 		else {
 			
-			return createObjectXml("undefined","Object not found in database.", "undefined"); 
+			return createObjectXml("undefined","Object not found in database.", "undefined",false,false); 
 		}
 		
 
@@ -154,13 +161,14 @@ public class MachineService {
 	 * @param id
 	 * @return
 	 */
-	public String createObjectXml(String type, String name, String id){
+	public String createObjectXml(String type, String name, String id, boolean aggregatedAsChild,boolean aggregatedAsParent){
 		 String xml = "<Object>";
 		 
 		 	xml+="<type>"+type+"</type>";
 			xml+="<name>"+name+"</name>";
 			xml+="<id>"+id+"</id>";
-		 
+			xml+="<aggregatedAsChild>"+aggregatedAsChild+"</aggregatedAsChild>";
+			xml+="<aggregatedAsParent>"+aggregatedAsParent+"</aggregatedAsParent>";
 		 xml+="</Object>";
 
 		 return xml;
