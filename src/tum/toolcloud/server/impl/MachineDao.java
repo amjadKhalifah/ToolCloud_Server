@@ -32,7 +32,7 @@ public class MachineDao implements IMachineDAO {
 
 	@Override
 	public Machine find(String mid) {
-		String sql = "SELECT Machine.MACHINE_ID, MACHINE.NAME,MACHINE.DER, COMPANY.NAME AS COMPANY_NAME FROM MACHINE  "
+		String sql = "SELECT Machine.MACHINE_ID, MACHINE.NAME,MACHINE.DER, MACHINE.CAD,COMPANY.NAME AS COMPANY_NAME FROM MACHINE  "
 				+ "INNER JOIN COMPANY ON  COMPANY.COMPANY_ID = MACHINE.COMPANY_ID "
 				+ "WHERE MACHINE_ID = ?";
 		try {

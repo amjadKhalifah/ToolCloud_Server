@@ -1,6 +1,5 @@
 package tum.toolcloud.server.impl;
 
-import java.sql.Types;
 import java.util.List;
 
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -9,8 +8,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import tum.toolcloud.server.idao.IToolDAO;
-import tum.toolcloud.server.model.Company;
-import tum.toolcloud.server.model.Intake;
 import tum.toolcloud.server.model.Tool;
 
 @Component

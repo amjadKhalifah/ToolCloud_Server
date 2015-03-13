@@ -1,7 +1,5 @@
 package tum.toolcloud.server.model;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class Intake {
 
@@ -12,6 +10,7 @@ public class Intake {
 	private String height;
 	private String machineId;
 	private Tool tool;
+	private String cad;
 	public Intake() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -65,6 +64,12 @@ public class Intake {
 		this.tool = tool;
 	}
 	
+	public String getCad() {
+		return cad;
+	}
+	public void setCad(String cad) {
+		this.cad = cad;
+	}
 	
 	
 	@Override
@@ -76,6 +81,7 @@ public class Intake {
 				+ "<Intake_length>" + length + "</Intake_length>"
 				+ "<Intake_height>" + height + "</Intake_height>"
 				+ "<Intake_machineId>" + machineId + "</Intake_machineId>"
+				+ "<Intake_cad>" + cad + "</Intake_cad>"
 		+ "</Intake>" ;
 	
 
@@ -90,6 +96,7 @@ public class Intake {
 					+ "<Intake_length>" + length + "</Intake_length>"
 					+ "<Intake_height>" + height + "</Intake_height>"
 					+ "<Intake_machineId>" + machineId + "</Intake_machineId>"
+					+ "<Intake_cad>" + cad + "</Intake_cad>"
 					+tool.toString2()
 				+ "</Intake>" ;
 		
