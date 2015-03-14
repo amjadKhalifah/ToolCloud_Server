@@ -46,12 +46,22 @@ public class IntakeDao implements IIntakeDAO {
 
 	@Override
 	public void update(Intake intake) {
-		String sql = "UPDATE INTAKE SET MACHINE_ID=?  WHERE INTAKE_ID = ?";
+		String sql = "UPDATE INTAKE SET MACHINE_ID=? , LOCATION=?  WHERE INTAKE_ID = ?";
 
 		jdbcTemplate.update(sql,
-				new Object[] { intake.getMachineId(), intake.getIntakeId() });
+				new Object[] { intake.getMachineId(),intake.getLocation(),intake.getIntakeId() });
 
 	}
+	
+	@Override
+	public void updateIntake(Intake intake) {
+		String sql = "UPDATE INTAKE SET  LOCATION=?  WHERE INTAKE_ID = ?";
+
+		jdbcTemplate.update(sql,
+				new Object[] { intake.getLocation(),intake.getIntakeId() });
+
+	}
+
 
 	@Override
 	public List<String> findIds() {

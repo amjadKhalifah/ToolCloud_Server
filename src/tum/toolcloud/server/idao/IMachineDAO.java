@@ -12,5 +12,6 @@ public interface IMachineDAO {
 	
 	List<Machine> findAll();
 	List<String> findIds();
+	void update(Machine machine);
 	
 }

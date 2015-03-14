@@ -32,7 +32,7 @@ public class MachineDao implements IMachineDAO {
 
 	@Override
 	public Machine find(String mid) {
-		String sql = "SELECT Machine.MACHINE_ID, MACHINE.NAME,MACHINE.DER, MACHINE.CAD,COMPANY.NAME AS COMPANY_NAME FROM MACHINE  "
+		String sql = "SELECT Machine.MACHINE_ID, MACHINE.NAME,MACHINE.DER, MACHINE.CAD,MACHINE.LOCATION,COMPANY.NAME AS COMPANY_NAME FROM MACHINE  "
 				+ "INNER JOIN COMPANY ON  COMPANY.COMPANY_ID = MACHINE.COMPANY_ID "
 				+ "WHERE MACHINE_ID = ?";
 		try {
@@ -61,6 +61,16 @@ public class MachineDao implements IMachineDAO {
 		List<String> ids = (List<String>) jdbcTemplate.queryForList(sql,
 				String.class);
 		return ids;
+	}
+
+	@Override
+	public void update(Machine machine) {
+
+		String sql = "UPDATE MACHINE SET LOCATION=? WHERE MACHINE_ID = ?";
+
+		jdbcTemplate.update(sql,
+				new Object[] { machine.getLocation(), machine.getMachineId() });
+
 	}
 
 }

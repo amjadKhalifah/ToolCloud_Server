@@ -15,5 +15,7 @@ public interface IIntakeDAO {
 	
 	void update(Intake intake);
 	List<Intake> findByMachineId(String machineId);
+
+	void updateIntake(Intake intake);
 	
 }

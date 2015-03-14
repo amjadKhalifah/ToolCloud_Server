@@ -32,7 +32,6 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -43,6 +42,7 @@ import tum.toolcloud.server.idao.IIntakeDAO;
 import tum.toolcloud.server.idao.IMachineDAO;
 import tum.toolcloud.server.idao.IToolDAO;
 import tum.toolcloud.server.model.Intake;
+import tum.toolcloud.server.model.Machine;
 import tum.toolcloud.server.model.Tool;
 
 @Component
@@ -192,8 +192,10 @@ public class ClientJob {
 			SOAPMessage response = connection.call(message, endpoint);
 			
 			String result = createSoapResponse(response);
-			logger.info("response  " + result);
+//			logger.info("response  " + result);
 			List<Event> events = parseXML(result);
+			
+			
 			logger.info("Read " + events.size() + " events");
 			connection.close();
 			if (sync_type == QUERY_MACHINE) {
@@ -230,12 +232,17 @@ public class ClientJob {
 		// update the machine id on reversed pattern
 		for (int i = 0; i < events.size(); i++) {
 			Event currentEvent = events.get(i);
+			Machine machine = new Machine();
+			machine.setMachineId(currentEvent.getParentID());
+			machine.setLocation(currentEvent.getReadPoint());
+			machineDao.update(machine);
 			// System.out.println(currentEvent);
 			{ // set id to null
 				if (intakes.contains(currentEvent.getChildEPC())) {
 					// child is an intake
 					Intake intake = new Intake();
 					intake.setIntakeId(currentEvent.getChildEPC());
+					intake.setLocation(currentEvent.getReadPoint());
 					if (currentEvent.getAction().equals("DELETE")) {
 						intake.setMachineId(null);
 					} else {
@@ -247,6 +254,7 @@ public class ClientJob {
 					// child is an tool
 					Tool tool = new Tool();
 					tool.setToolId(currentEvent.getChildEPC());
+					tool.setLocation(currentEvent.getReadPoint());
 					if (currentEvent.getAction().equals("DELETE")) {
 						tool.setMachineId(null);
 					} else {
@@ -267,12 +275,17 @@ public class ClientJob {
 		// update the intake id on reversed pattern
 		for (int i = 0; i < events.size(); i++) {
 			Event currentEvent = events.get(i);
+			Intake intake = new Intake();
+			intake.setIntakeId(currentEvent.getParentID());
+			intake.setLocation(currentEvent.getReadPoint());
+			intakeDao.updateIntake(intake);
 			// System.out.println(currentEvent);
 			{ // set id to null
 				if (tools.contains(currentEvent.getChildEPC())) {
 					// child is an tool
 					Tool tool = new Tool();
 					tool.setToolId(currentEvent.getChildEPC());
+					tool.setLocation(currentEvent.getReadPoint());
 					if (currentEvent.getAction().equals("DELETE")) {
 						tool.setIntakeId(null);
 					} else {

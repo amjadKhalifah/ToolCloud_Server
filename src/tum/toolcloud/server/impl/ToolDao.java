@@ -45,19 +45,19 @@ public class ToolDao implements IToolDAO {
 
 	@Override
 	public void update(Tool tool) {
-		String sql = "UPDATE TOOL SET INTAKE_ID=? WHERE TOOL_ID = ?";
+		String sql = "UPDATE TOOL SET INTAKE_ID=? , LOCATION =? WHERE TOOL_ID = ?";
 
 		jdbcTemplate.update(sql,
-				new Object[] { tool.getIntakeId(), tool.getToolId() });
+				new Object[] { tool.getIntakeId(), tool.getLocation(),tool.getToolId() });
 
 	}
 
 	@Override
 	public void updateMachine(Tool tool) {
-		String sql = "UPDATE TOOL SET  MACHINE_ID=?  WHERE TOOL_ID = ?";
+		String sql = "UPDATE TOOL SET  MACHINE_ID=? , LOCATION =? WHERE TOOL_ID = ?";
 
 		jdbcTemplate.update(sql,
-				new Object[] { tool.getMachineId(), tool.getToolId() });
+				new Object[] { tool.getMachineId(), tool.getLocation(),tool.getToolId() });
 
 	}
 

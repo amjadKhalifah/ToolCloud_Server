@@ -61,7 +61,7 @@ public class MachineService {
 		Machine machine = machineDao.find(oid);	
 		if (machine != null)
 		{
-			return createObjectXml("machine", machine.getName(), machine.getMachineId(),false,false); 
+			return createObjectXml("machine", machine.getName(), machine.getMachineId(),false,false,machine.getLocation()); 
 		} 
 		
 		Intake intake = intakeDao.find(oid);	
@@ -70,7 +70,7 @@ public class MachineService {
 			Tool tool = toolDao.findByIntakeId(intake.getIntakeId());
 			boolean aggregatedAsParent = (tool==null)? false:true;
 			boolean aggregatedAsChild = (intake.getMachineId()==null)? false:true;
-			return createObjectXml("intake", intake.getName(), intake.getIntakeId(),aggregatedAsChild ,aggregatedAsParent); 
+			return createObjectXml("intake", intake.getName(), intake.getIntakeId(),aggregatedAsChild ,aggregatedAsParent,intake.getLocation()); 
 		}
 		
 		Tool tool = toolDao.find(oid);	
@@ -80,12 +80,12 @@ public class MachineService {
 			if (tool.getMachineId()!=null || tool.getIntakeId()!=null){
 				aggregatedAsChild = true;
 			}
-			return createObjectXml("tool", tool.getName(), tool.getToolId(),aggregatedAsChild,false); 
+			return createObjectXml("tool", tool.getName(), tool.getToolId(),aggregatedAsChild,false,tool.getLocation()); 
 		}
 		
 		else {
 			
-			return createObjectXml("undefined","Object not found in database.", "undefined",false,false); 
+			return createObjectXml("undefined","Object not found in database.", "undefined",false,false,""); 
 		}
 		
 
@@ -161,7 +161,7 @@ public class MachineService {
 	 * @param id
 	 * @return
 	 */
-	public String createObjectXml(String type, String name, String id, boolean aggregatedAsChild,boolean aggregatedAsParent){
+	public String createObjectXml(String type, String name, String id, boolean aggregatedAsChild,boolean aggregatedAsParent, String location){
 		 String xml = "<Object>";
 		 
 		 	xml+="<type>"+type+"</type>";
@@ -169,6 +169,7 @@ public class MachineService {
 			xml+="<id>"+id+"</id>";
 			xml+="<aggregatedAsChild>"+aggregatedAsChild+"</aggregatedAsChild>";
 			xml+="<aggregatedAsParent>"+aggregatedAsParent+"</aggregatedAsParent>";
+			xml+="<location>"+location+"</location>";
 		 xml+="</Object>";
 
 		 return xml;

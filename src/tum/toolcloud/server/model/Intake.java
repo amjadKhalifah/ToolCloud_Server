@@ -11,6 +11,7 @@ public class Intake {
 	private String machineId;
 	private Tool tool;
 	private String cad;
+	private String location;
 	public Intake() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -70,7 +71,12 @@ public class Intake {
 	public void setCad(String cad) {
 		this.cad = cad;
 	}
-	
+	public String getLocation() {
+		return location;
+	}
+	public void setLocation(String location) {
+		this.location = location;
+	}
 	
 	@Override
 	public String toString() {
@@ -82,6 +88,7 @@ public class Intake {
 				+ "<Intake_height>" + height + "</Intake_height>"
 				+ "<Intake_machineId>" + machineId + "</Intake_machineId>"
 				+ "<Intake_cad>" + cad + "</Intake_cad>"
+				+ "<Intake_location>" + location + "</Intake_location>"
 		+ "</Intake>" ;
 	
 
@@ -97,6 +104,7 @@ public class Intake {
 					+ "<Intake_height>" + height + "</Intake_height>"
 					+ "<Intake_machineId>" + machineId + "</Intake_machineId>"
 					+ "<Intake_cad>" + cad + "</Intake_cad>"
+					+ "<Intake_location>" + location + "</Intake_location>"
 					+tool.toString2()
 				+ "</Intake>" ;
 		

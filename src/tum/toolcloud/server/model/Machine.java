@@ -7,6 +7,7 @@ public class Machine {
 	private String der;//?
 	private String companyName;
 	private String cad;
+	private String location;
 	
 	public Machine() {
 
@@ -48,6 +49,12 @@ public class Machine {
 	public void setCad(String cad) {
 		this.cad = cad;
 	}
+	public String getLocation() {
+		return location;
+	}
+	public void setLocation(String location) {
+		this.location = location;
+	}
 	@Override
 	public String toString() {
 		return	"<Machine> "
@@ -56,6 +63,7 @@ public class Machine {
 					+ "<der>" + der + "</der>"
 					+ "<companyId>" + companyName + "</companyId>"
 					+ "<cad>" + cad + "</cad>"
+				    + "<location>" + location + "</location>"
 			+ "</Machine>" ;
 		
 		
