@@ -230,7 +230,7 @@ public class ClientJob {
 	private void updateDBMachine(List<Event> events) {
 		// events parents are machines and childs could be tools or intake
 		// update the machine id on reversed pattern
-		for (int i = 0; i < events.size(); i++) {
+		for (int i = events.size() - 1; i >= 0; i--) {
 			Event currentEvent = events.get(i);
 			Machine machine = new Machine();
 			machine.setMachineId(currentEvent.getParentID());
@@ -273,8 +273,9 @@ public class ClientJob {
 	private void updateDBIntake(List<Event> events) {
 		// events parents are intakes are tools
 		// update the intake id on reversed pattern
-		for (int i = 0; i < events.size(); i++) {
+		for (int i = events.size() - 1; i >= 0; i--) {
 			Event currentEvent = events.get(i);
+		
 			Intake intake = new Intake();
 			intake.setIntakeId(currentEvent.getParentID());
 			intake.setLocation(currentEvent.getReadPoint());
@@ -335,7 +336,7 @@ public class ClientJob {
 
 			xr.parse(inStream);
 
-			ArrayList<Event> eventsList = myXMLHandler.getEventsList();
+			List<Event> eventsList = myXMLHandler.getEventsList();
 
 			return eventsList;
 		} catch (Exception e) {

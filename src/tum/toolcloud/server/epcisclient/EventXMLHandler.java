@@ -1,6 +1,7 @@
 package tum.toolcloud.server.epcisclient;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.xml.sax.Attributes;
@@ -15,10 +16,10 @@ public class EventXMLHandler extends DefaultHandler {
     Boolean currentEvent = false;
     String currentValue = "";
     Event event = null;
-    private Set<Event> eventsList = new HashSet<Event>();
+    private List<Event> eventsList = new ArrayList();
 
-    public ArrayList<Event> getEventsList() {
-        return    new ArrayList<Event>(eventsList);
+    public List<Event> getEventsList() {
+        return  eventsList;
     }
 
     // Called when tag starts
