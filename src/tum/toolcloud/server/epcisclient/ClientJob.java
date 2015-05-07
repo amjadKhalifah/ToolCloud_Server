@@ -6,7 +6,6 @@ import java.io.StringWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
@@ -32,9 +31,11 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 
 import org.apache.log4j.Logger;
+import org.springframework.context.EmbeddedValueResolverAware;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringValueResolver;
 import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;
 
@@ -47,9 +48,11 @@ import tum.toolcloud.server.model.Tool;
 
 @Component
 @EnableScheduling
-public class ClientJob {
+public class ClientJob implements EmbeddedValueResolverAware  {
 
-	public final static String QUERY_URL = "http://217.110.56.76:80/epc-evo/query?wsdl";
+	public  static String QUERY_URL =	"" ;
+	public  static String EPCIS_USER =	"" ;
+	public  static String EPCIS_PASS =	"" ;
 	public static final String QUERY_NAMESPACE = "urn:epcglobal:epcis-query:xsd:1";
 	public static final String QUERY_SOAP_ACTION_PREFIX = "/";
 	private static final String QUERY_METHOD = "Poll";
@@ -67,10 +70,16 @@ public class ClientJob {
 	private static Logger logger = Logger.getLogger(ClientJob.class);
 	private List<String> machines;
 	private List<String> intakes;
-	private List<String> tools;
+	private List<String> tools; 	
+	private StringValueResolver stringResolver;
 
-	 @Scheduled(fixedDelayString = "${refresh.rate}")
+	@Scheduled(fixedDelayString = "${refresh.rate}")
 	public void start() {
+		if (QUERY_URL.isEmpty()){
+			QUERY_URL = stringResolver.resolveStringValue("${epcis.query.url}");
+			EPCIS_USER = stringResolver.resolveStringValue("${epcis.user}");
+			EPCIS_PASS = stringResolver.resolveStringValue("${epcis.pass}");
+		}
 		logger.info("Starting a sync cycle");
 		machines = machineDao.findIds();
 		intakes = intakeDao.findIds();
@@ -171,7 +180,7 @@ public class ClientJob {
 
 			// TODO externalize username and pass
 			String authorization = new sun.misc.BASE64Encoder()
-					.encode(("epcis:L1wrenceJ").getBytes());
+					.encode((EPCIS_USER+":"+EPCIS_PASS).getBytes());
 			MimeHeaders hd = message.getMimeHeaders();
 			hd.addHeader("Authorization", "Basic " + authorization);
 			//
@@ -355,5 +364,11 @@ public class ClientJob {
 
 	public void setToolDao(IToolDAO toolDao) {
 		this.toolDao = toolDao;
+	}
+
+	@Override
+	public void setEmbeddedValueResolver(StringValueResolver arg0) {
+		this.stringResolver = arg0;
+		
 	}
 }
