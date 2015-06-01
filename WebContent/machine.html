@@ -1,0 +1,72 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Machine</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script src="js/main_machine.js"></script>
+  <link rel="stylesheet" href="css/styles.css">
+  <script>
+  $(function() {
+    $( "#accordion" ).accordion();
+  });
+  </script>
+</head>
+
+<div id="accordion">
+
+  <h3 id="section1Title">Machine Info</h3>
+  <div id="section1">
+	<label >Machine Id:</label>
+	<input id="mId" name="id" type="text"  disabled />
+
+	<label >Name:</label>
+	<input type="text" id="mName" name="name" disabled>
+	
+	<label >Der:</label>
+	<input type="text" id="mDer" name="der" disabled>
+	
+		
+	<label >Location:</label>
+	<input type="text" id="mLocation" name="loctaion" disabled>
+	
+	<label >CAD:</label>
+	<a  id="mCad" >Show CAD</a>
+	
+	
+  </div>
+  
+  
+  <h3 id="section2Title">Machine-Intakes</h3>
+  <div id="section2">
+ 	<ul id="intakesList"></ul>
+
+ 
+
+
+
+
+
+  </div>
+  <h3 id="section3Title">Machine-Tools</h3>
+  <div id="section3">
+    <p>
+    Nam enim risus, molestie et, porta ac, aliquam ac, risus. Quisque lobortis.
+    Phasellus pellentesque purus in massa. Aenean in pede. Phasellus ac libero
+    ac tellus pellentesque semper. Sed ac felis. Sed commodo, magna quis
+    lacinia ornare, quam ante aliquam nisi, eu iaculis leo purus venenatis dui.
+    </p>
+    <ul>
+      <li>List item one</li>
+      <li>List item two</li>
+      <li>List item three</li>
+    </ul>
+  </div>
+ 
+</div>
+
+
+</body>
+</html>

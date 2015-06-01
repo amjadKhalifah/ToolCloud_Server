@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Intake</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script src="js/main_intake.js"></script>
+  <link rel="stylesheet" href="css/styles.css">
+  <script>
+  $(function() {
+    $( "#accordion" ).accordion();
+  });
+  </script>
+</head>
+
+<div id="accordion">
+
+  <h3 id="section1Title">Intake Info</h3>
+  <div id="section1">
+	<label >Intake Id:</label>
+	<input id="inId" name="id" type="text"  disabled />
+
+	<label >Name:</label>
+	<input type="text" id="inName" name="name" disabled>
+	
+	<label >Height:</label>
+	<input type="text" id="inHeight" name="height" disabled>
+	
+		
+	<label >Length:</label>
+	<input type="text" id="inLength" name="length" disabled>
+	
+	<label >CAD:</label>
+	<a  id="inCad" >Show CAD</a>
+	
+	
+  </div>
+  
+  
+  <h3 id="section2Title">Tool</h3>
+  <div id="section2">
+
+  </div>
+
+ 
+</div>
+
+
+</body>
+</html>
