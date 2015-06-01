@@ -12,6 +12,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
+import org.json.JSONObject;
+import org.json.XML;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -65,7 +67,24 @@ public class ToolService {
 
 		return createReultsXml(tool);
 	}
+	@Path("/details/json/{oid}")
+	@GET
+	@Produces("application/json")
+	public String getJSONDetails(@PathParam("oid") String oid) {
+		Tool tool;
+		// get the intakes
+		tool = toolDao.find(oid);
+		if (tool == null ){
+			return "<Results> Unkown object<Results>";
+		}
 
+		return createReultsJSON(tool);
+	}
+	private String createReultsJSON(Tool tool) {
+		JSONObject xmlJSONObj = XML.toJSONObject(createReultsXml(tool));
+		String jsonPrettyPrintString = xmlJSONObj.toString();
+		return jsonPrettyPrintString;
+	}
 	private String createReultsXml(Tool tool) {
 		String xml = "<Results>";
 		if (tool != null) {

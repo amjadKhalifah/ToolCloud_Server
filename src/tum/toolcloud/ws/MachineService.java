@@ -12,6 +12,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
+import org.json.JSONObject;
+import org.json.XML;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -118,7 +120,39 @@ public class MachineService {
 	}
 	
 	
+	@Path("/details/json/{oid}")
+	@GET
+	@Produces("application/json")
+	public String getJsonDetails(@PathParam("oid") String oid) {
+		Machine machine;
+		List<Intake>intakes= new ArrayList<>();
+		List<Tool> tools = new ArrayList<>();
+		// get the machine info
+		machine = machineDao.find(oid);	
+		// get the intakes
+		intakes = intakeDao.findByMachineId(oid);
+		// loop intakes and get tools
+		for (Intake intake: intakes){
+			// could return null;
+			Tool tool = toolDao.findByIntakeId(intake.getIntakeId());
+			intake.setTool(tool);
+		}
+		
+		// get tools 
+		tools = toolDao.findByMachineId(oid);
+		
+		return createReultsJSON(machine,intakes,tools);
+	}
+	
 
+	private String createReultsJSON(Machine machine, List<Intake> intakes,
+			List<Tool> tools) {
+		JSONObject xmlJSONObj = XML.toJSONObject(createReultsXml(machine, intakes, tools));
+		String jsonPrettyPrintString = xmlJSONObj.toString();
+		return jsonPrettyPrintString;
+	}
+
+	
 	private String createReultsXml(Machine machine, List<Intake> intakes,
 			List<Tool> tools) {
 		 String xml = "<Results>";
